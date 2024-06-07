@@ -1,0 +1,54 @@
+/include/ "system-conf.dtsi"
+/ {
+    sit9121_0: sit9121_0 { /* clk0_usb - u23 */
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <26000000>;
+	};
+    sit9121_1: sit9121_1 { /* clk1_dp - u23 */
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <27000000>;
+	};
+};
+
+
+&psgtr{
+    /* usb3, dp */
+	clocks = <&sit9121_0>, <&sit9121_1>;
+	clock-names = "ref0", "ref1";
+};
+
+&usb0{
+	status = "okay";
+};
+
+&dwc3_0{
+	status = "okay";
+	dr_mode = "host";                   
+	maximum-speed = "super-speed";      
+};
+
+&usb1{
+	status = "okay";
+};
+
+&dwc3_1{
+	status = "okay";
+	dr_mode = "host";                   
+	maximum-speed = "super-speed";      
+};
+
+&qspi {
+   	status = "okay";
+   	flash@0 {
+   	compatible = "n25q512a", "jedec,spi-nor";
+   	reg = <0x0>;
+   	spi-tx-bus-width = <4>;
+   	spi-rx-bus-width = <4>;
+   	spi-max-frequency = <10000000>;
+   	#address-cells = <1>;
+   	#size-cells = <1>;
+
+  };
+};
